@@ -8,18 +8,17 @@ export class Tamagotchi {
 
   constructor(public animalName: string) {
     this.animalType = this.getRandomType();
-    this.firstTimer = setInterval(this.getHungerValue.bind(this), 1000);
-    this.secondTimer = setInterval(this.getHappinessValue.bind(this), 1000);
+    this.firstTimer = setInterval(this.getHungerValue.bind(this), 1000); // change interval here
+    this.secondTimer = setInterval(this.getHappinessValue.bind(this), 1000); // Change interval here
   }
   public getRandomType(): string {
     const random = Math.round(Math.random() * 2);
     const tamagotchiNames = ["Maskutchi", "Ginjirotchi", "Darumatchi"];
     let tamagotchiName = tamagotchiNames[random];
-    console.log(tamagotchiName);
     return tamagotchiName;
   }
   public getAnimalImg(): string {
-    return `./img/${this.animalType}.png`
+    return `./img/${this.animalType}.png`;
   }
   public play(): number {
     this.happinessValue++;
@@ -51,6 +50,11 @@ export class Tamagotchi {
       clearInterval(this.secondTimer);
       this.hideElements();
     }
+    if (this.happinessValue == 1) {
+      document.getElementById("happinessText").style.color = "red";
+    } else {
+      document.getElementById("happinessText").style.color = "black";
+    }
   }
   private getHungerValue(): void {
     this.hungerValue++;
@@ -72,6 +76,12 @@ export class Tamagotchi {
       clearInterval(this.secondTimer);
       this.hideElements();
     }
+    if (this.hungerValue == 9) {
+      document.getElementById("hungerText").style.color = "red";
+    }
+    else {
+      document.getElementById("hungerText").style.color = "black";
+    }
   }
   private hideElements(): void {
     document.getElementById("tamInfo").style.display = "none";
@@ -81,10 +91,14 @@ export class Tamagotchi {
     document.getElementById("playBtn").style.display = "none";
     if (this.hungerValue == 10) {
       document.getElementById("happinessText").style.display = "none";
-      document.getElementById("animalPicture").setAttribute('src', './img/Death.png');
+      document
+        .getElementById("animalPicture")
+        .setAttribute("src", "./img/Death.png");
     } else if (this.happinessValue == 0) {
       document.getElementById("hungerText").style.display = "none";
-      document.getElementById("animalPicture").setAttribute('src', './img/Death.png');
+      document
+        .getElementById("animalPicture")
+        .setAttribute("src", "./img/Death.png");
     }
   }
   public createImgElement(): void {

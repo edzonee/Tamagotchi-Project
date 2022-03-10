@@ -2,8 +2,6 @@ import { Tamagotchi } from "./tamagotchi";
 
 const myTam = new Tamagotchi(prompt(`Pick a name`));
 
-console.log(myTam);
-
 document.body.style.textAlign = "center";
 
 const myTitle = document.createElement("h1");
