@@ -3,8 +3,6 @@ import { Tamagotchi, AnimalTypes } from "./tamagotchi";
 const myTam = new Tamagotchi(prompt(`Pick a name`));
 
 console.log(myTam);
-/* myTam.hungerValue();
-myTam.happinessValue(); */
 myTam.isAlive();
 myTam.feed();
 
@@ -40,10 +38,12 @@ restart.addEventListener("click", () => location.reload());
 document.body.appendChild(restart);
 restart.innerText = "Reload page";
 
-// const hunger = document.createElement("p");
-// document.body.appendChild(hunger);
-// hunger.innerText = "Hunger level: " + myTam.hungerValue();
+const hunger = document.createElement("p");
+hunger.setAttribute("id", "hungerText");
+document.body.appendChild(hunger);
+hunger.innerText = "Hunger level: " + myTam.feed();
 
 const happiness = document.createElement("p");
+happiness.setAttribute("id", "happinessText");
 document.body.appendChild(happiness);
 happiness.innerText = "Happiness level: " + myTam.play();

@@ -23,7 +23,7 @@ class Tamagotchi {
     else if (Math.random() > 0.3 && Math.random() < 0.6) return "Ginjirotchi";
     else return "Darumatchi";
   }
-private hungerValue() {
+  private hungerValue() {
     this.#hungerValue++;
     if (this.#hungerValue == 10) {
       console.log(`${this.animalName} died of hunger...`);
@@ -31,7 +31,6 @@ private hungerValue() {
       clearInterval(this.#secondTimer);
     }
     console.log("Hunger level:", this.#hungerValue);
-    
   }
   private happinessValue() {
     this.#happinessValue--;
@@ -49,17 +48,18 @@ private hungerValue() {
       console.log((this.#isAlive = true));
     }
   }
-  play():number {
+  play(): number {
     this.#happinessValue++;
     return this.#happinessValue;
   }
-  feed() {
+  feed(): number {
     this.#hungerValue--;
+    return this.#hungerValue;
   }
-  reset(){
+  reset() {
     this.#happinessValue = 5;
     this.#hungerValue = 5;
-    console.clear()
+    console.clear();
   }
 }
 
