@@ -1,66 +1,95 @@
-type AnimalTypes = "Maskutchi" | "Ginjirotchi" | "Darumatchi";
-
-class Tamagotchi {
-  #isAlive: Boolean;
-  #happinessValue: number = 5;
-  #hungerValue: number = 5;
-  animalType: AnimalTypes;
-  #firstTimer: number;
-  #secondTimer: number;
+export class Tamagotchi {
+  /* happinessValue has value 6 and hungerValue has 4 because I have no HTML elements, since I created all in TS */
+  private happinessValue: number = 6;
+  private hungerValue: number = 4;
+  public readonly animalType: string;
+  private firstTimer: number;
+  private secondTimer: number;
 
   constructor(public animalName: string) {
     this.animalType = this.getRandomType();
-    this.#firstTimer = setInterval(this.hungerValue.bind(this), 1000);
-    this.#secondTimer = setInterval(this.happinessValue.bind(this), 1000);
+    this.firstTimer = setInterval(this.getHungerValue.bind(this), 1000);
+    this.secondTimer = setInterval(this.getHappinessValue.bind(this), 1000);
   }
-
-  getName() {
-    console.log("Your animals name is :", this.animalName);
+  public getRandomType(): string {
+    const random = Math.round(Math.random() * 2);
+    const tamagotchiNames = ["Maskutchi", "Ginjirotchi", "Darumatchi"];
+    let tamagotchiName = tamagotchiNames[random];
+    console.log(tamagotchiName);
+    return tamagotchiName;
   }
-  getRandomType(): AnimalTypes {
-    const random = Math.floor(Math.random() * 3);
-    if (Math.random() < 0.3) return "Maskutchi";
-    else if (Math.random() > 0.3 && Math.random() < 0.6) return "Ginjirotchi";
-    else return "Darumatchi";
+  public getAnimalImg(): string {
+    return `./img/${this.animalType}.png`
   }
-  private hungerValue() {
-    this.#hungerValue++;
-    if (this.#hungerValue == 10) {
-      console.log(`${this.animalName} died of hunger...`);
-      clearInterval(this.#firstTimer);
-      clearInterval(this.#secondTimer);
-    }
-    console.log("Hunger level:", this.#hungerValue);
+  public play(): number {
+    this.happinessValue++;
+    return this.happinessValue;
   }
-  private happinessValue() {
-    this.#happinessValue--;
-    if (this.#happinessValue == 0) {
-      console.log(`${this.animalName} died of depression :(`);
-      clearInterval(this.#secondTimer);
-      clearInterval(this.#firstTimer);
-    }
-    console.log("Happiness level:", this.#happinessValue);
+  public feed(): number {
+    this.hungerValue--;
+    return this.hungerValue;
   }
-  isAlive() {
-    if (this.#hungerValue > 10 || this.#happinessValue < 0) {
-      console.log((this.#isAlive = false));
+  private getHappinessValue(): void {
+    this.happinessValue--;
+    document.getElementById(
+      "happinessText"
+    ).innerText = `Happiness level: ${this.happinessValue}`;
+    if (this.happinessValue >= 10) {
+      document.getElementById(
+        "happinessText"
+      ).innerText = `Happiness level: I am already entertained.`;
     } else {
-      console.log((this.#isAlive = true));
+      document.getElementById(
+        "happinessText"
+      ).innerText = `Happiness level: ${this.happinessValue}`;
+    }
+    if (this.happinessValue == 0) {
+      document.getElementById(
+        "happinessText"
+      ).innerText = `${this.animalName} died of depression...`;
+      clearInterval(this.firstTimer);
+      clearInterval(this.secondTimer);
+      this.hideElements();
     }
   }
-  play(): number {
-    this.#happinessValue++;
-    return this.#happinessValue;
+  private getHungerValue(): void {
+    this.hungerValue++;
+    document.getElementById(
+      "hungerText"
+    ).innerText = `Hunger level: ${this.hungerValue}`;
+    if (this.hungerValue <= 0) {
+      document.getElementById("hungerText").innerText = `Hunger level: Full.`;
+    } else {
+      document.getElementById(
+        "hungerText"
+      ).innerText = `Hunger level: ${this.hungerValue}`;
+    }
+    if (this.hungerValue == 10) {
+      document.getElementById(
+        "hungerText"
+      ).innerText = `${this.animalName} died of hunger...`;
+      clearInterval(this.firstTimer);
+      clearInterval(this.secondTimer);
+      this.hideElements();
+    }
   }
-  feed(): number {
-    this.#hungerValue--;
-    return this.#hungerValue;
+  private hideElements(): void {
+    document.getElementById("tamInfo").style.display = "none";
+    document.getElementById("tamType").style.display = "none";
+    document.getElementById("tamName").style.display = "none";
+    document.getElementById("feedBtn").style.display = "none";
+    document.getElementById("playBtn").style.display = "none";
+    if (this.hungerValue == 10) {
+      document.getElementById("happinessText").style.display = "none";
+      document.getElementById("animalPicture").setAttribute('src', './img/Death.png');
+    } else if (this.happinessValue == 0) {
+      document.getElementById("hungerText").style.display = "none";
+      document.getElementById("animalPicture").setAttribute('src', './img/Death.png');
+    }
   }
-  reset() {
-    this.#happinessValue = 5;
-    this.#hungerValue = 5;
-    console.clear();
+  public createImgElement(): void {
+    const makeTamaImg: HTMLImageElement =
+      document.querySelector("#animalPicture");
+    makeTamaImg.src = this.getAnimalImg();
   }
 }
-
-export { Tamagotchi, AnimalTypes };
