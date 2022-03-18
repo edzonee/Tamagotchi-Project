@@ -1,5 +1,9 @@
 
 # Installation
+### Install
+~~~~
+npm install
+~~~~
 
 ### Run application
 ~~~~
