@@ -1,3 +1,6 @@
+# GITHUB PAGE IS LIVE
+
+The app now works with Github pages, [link here](https://edzonee.github.io/FE21-Ediz-Mehmet-Tamagotchi/)
 
 # Installation
 ### Install
